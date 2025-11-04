@@ -1,38 +1,57 @@
 version: "3.9"
+
+networks:
+  webnet:
+    driver: bridge
+
 services:
-  llm:
-    build: ./backend
-    container_name: pod-760
-    networks:
-      - webnet
+  node1:
+    image: net-760-node1:latest
+    container_name: node1
+    restart: always
+    networks: [webnet]
+    ports:
+      - "3000:3000"
     volumes:
-      - ./backend:/app
-      - ./models:/llama.cpp/models
-    command: ["node", "server.js"]
+      - ./sites/site1:/usr/src/app:ro
 
   node2:
-    image: node:18
+    image: net-760-node2:latest
     container_name: node2
-    networks:
-      - webnet
+    restart: always
+    networks: [webnet]
+    ports:
+      - "4000:4000"
     volumes:
       - ./sites/site2:/usr/src/app:ro
-    command: bash -c "npm install -g http-server && http-server /usr/src/app -p 4000"
-    expose:
-      - "4000"
 
-  nginx:
-    image: nginx:stable
+  pod-760:
+    image: net-760-llm:latest
+    container_name: pod-760
+    restart: always
+    networks: [webnet]
+    ports:
+      - "5000:5000"
+    working_dir: /backend
+    command: ["node", "server.js"]
+    volumes:
+      - ./backend:/backend
+      - ./models:/llama.cpp/models:ro
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+
+  misc-nginx:
+    image: net-760-nginx:latest
     container_name: misc-nginx
-    networks:
-      - webnet
+    restart: always
+    networks: [webnet]
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-
-networks:
-  webnet:
-    driver: bridge
 
