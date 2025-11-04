@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LLM Test</title>
+<style>
+  body { font-family: monospace; background: #111; color: #0f0; padding: 1em; }
+  #out { white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<h2>LLM Output Stream</h2>
+<div id="out">(waiting for reply...)</div>
+
+<input id="prompt" placeholder="Enter your prompt here" style="width:80%">
+<button onclick="runPrompt()">Send</button>
+
+
+<script>
+async function runPrompt() {
+  const userPrompt = document.getElementById("prompt").value;
+
+  // clear old output
+  document.getElementById("out").textContent = "(thinking...)";
+
+  const response = await fetch("/node2/api/prompt", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ prompt: userPrompt })
+  });
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    document.getElementById("out").textContent = buffer;
+  }
+
+  document.getElementById("out").textContent += "\n[END]";
+}
+</script>
+
+</body>
+</html>
+
