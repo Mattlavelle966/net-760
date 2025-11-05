@@ -7,7 +7,7 @@ import { spawn } from  "child_process";
 const app = express();
 
 const PORT = 5000;
-
+const sytemPrompt = `You are Net-760's native llm please assist the user.`
 app.use(express.json());
 
 app.post("/api/prompt", (req,res) => {
@@ -23,7 +23,7 @@ app.post("/api/prompt", (req,res) => {
 		"-m",modelPath,
 		"-ngl","22",
 		"-n","512",
-		"-sys", "you are a assistant",
+		"-sys", sytemPrompt,
 		"-p", `<|user|>\n${userPrompt}\n<|assistant|>\n`
 	];
 	const llama = spawn("/llama.cpp/build/bin/llama-simple", args, {
