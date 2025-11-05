@@ -38,7 +38,7 @@ async function runPrompt() {
   parent.appendChild(userQuery);
   parent.appendChild(newResponse);
 
-  const response = await fetch("/node2/api/prompt", {
+  const response = await fetch("/net-760/api/prompt", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt: userPrompt })

@@ -21,12 +21,9 @@ app.post("/api/prompt", (req,res) => {
 	const modelPath = "/llama.cpp/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf";
 	const args = [
 		"-m",modelPath,
-		"-ngl","0",
-		"--ctx-size", "4096",
-		"--temp", "0.8",
-		"--top-p", "0.95",
-		"--repeat-penalty", "1.1",
+		"-ngl","1",
 		"-n","512",
+		"-sys", "you are a assistant",
 		"-p", `<|user|>\n${userPrompt}\n<|assistant|>\n`
 	];
 	const llama = spawn("/llama.cpp/build/bin/llama-simple", args, {
