@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="css/styles.css">
 <title>Net-760</title>
 </head>
 <body>
 <h2>LLM Output Stream</h2>
-<div id="out">(waiting for reply...)</div>
+<div id="out">welcome to net-760's native AI, say hello!</div>
 
 
 
@@ -37,7 +38,7 @@ async function runPrompt() {
   parent.appendChild(userQuery);
   parent.appendChild(newResponse);
 
-  const response = await fetch("/node2/api/prompt", {
+  const response = await fetch("/net-760/api/prompt", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt: userPrompt })

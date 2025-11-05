@@ -7,7 +7,7 @@ import { spawn } from  "child_process";
 const app = express();
 
 const PORT = 5000;
-const sytemPrompt = `You are Net-760's native llm please assist the user.`
+
 app.use(express.json());
 
 app.post("/api/prompt", (req,res) => {
@@ -21,14 +21,16 @@ app.post("/api/prompt", (req,res) => {
 	const modelPath = "/llama.cpp/models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf";
 	const args = [
 		"-m",modelPath,
-		"-ngl","22",
+		"-ngl","0",
+		"--ctx-size", "4096",
+		"--temp", "0.8",
+		"--top-p", "0.95",
+		"--repeat-penalty", "1.1",
 		"-n","512",
-		"-sys", sytemPrompt,
 		"-p", `<|user|>\n${userPrompt}\n<|assistant|>\n`
 	];
 	const llama = spawn("/llama.cpp/build/bin/llama-simple", args, {
 		stdio: ["ignore", "pipe", "pipe"],
-		env:{...process.env, CUDA_VISIBLE_DEVICES: "0"}
 	});
 	
 
