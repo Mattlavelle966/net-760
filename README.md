@@ -24,23 +24,23 @@ To start, I set up a series of Docker nodes, connected them through a virtual ne
 ## 7. Project Structure
 
 ```
-/net-760
-├── .git
-├── backend
-│   ├── package-lock.json
-│   ├── package.json
-│   └── server.js
-├── nginx
-│   └── nginx.conf
-├── sites
-│   ├── site1
-│   │
-│   └── site2
-│       ├── css
-│       └── test-llm.html
-├── .gitignore
-├── docker-compose.yml
-└── sync-net-760.sh
+        /net-760
+               ├── .git
+node-760 ──────├── backend
+               │   ├── package-lock.json
+               │   ├── package.json
+               │   └── server.js────|    
+node-proxy ────├── nginx            |
+               │   └── nginx.conf   |
+               ├──────── sites      |
+               │ node1─├── site1    |
+               │       │            | 
+               │ node2─└── site2 ───|
+               │       ├── css
+               │       └── test-llm.html
+               ├── .gitignore
+               ├── docker-compose.yml
+               └── sync-net-760.sh
 
 ```
 
