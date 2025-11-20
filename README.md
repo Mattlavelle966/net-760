@@ -1,4 +1,4 @@
-# 🧠 Net-760 Local AI Web Stack
+#  Net-760 Local AI Web Stack
 
 **Author:** Matthew Lavelle  
 **System:** Linux Mint 22.1 (Ubuntu Noble base)  
