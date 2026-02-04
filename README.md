@@ -14,8 +14,6 @@
 ## Overview
 I decided to create this repository because I’ve been working on a personal project for a while now, and I wanted to share some of the process I went through to build this stack. I was first inspired to make this system when I was reading Linux manuals and thought, “Wouldn’t it be great to have a dedicated mini LLM trained just on Linux manuals?” Thinking about this idea, I decided to challenge myself in new areas and broaden my horizons.
 
-To start, I set up a series of Docker nodes, connected them through a virtual network, and configured them to commit their images so I could include them in my docker-compose.yml. I also mounted my repository to each container for easy development. I used Nginx as my proxy, and since I planned to host multiple nodes, I figured I’d refurbish my old personal homepage website. I also decided to create both a front-end and a back-end node for the LLM—bringing the total to four distributed nodes running on the server.
-
 
 
 ---
